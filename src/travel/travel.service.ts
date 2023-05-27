@@ -1,10 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTravelDto } from './dto/create-travel.dto';
 import { UpdateTravelDto } from './dto/update-travel.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Travel } from './entities/travel.entity';
-import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class TravelService {
@@ -15,6 +14,12 @@ export class TravelService {
   ) {}
 
   async create(createTravelDto: CreateTravelDto) {
+    const verify_travel = await this.preloadTravelByCountryPlace(createTravelDto.country, createTravelDto.place)
+
+    if (!verify_travel) {
+      throw new HttpException('Country and Place already exists', HttpStatus.FORBIDDEN);
+    }
+
     const travel = await this.travelRepository.create(createTravelDto);
     return this.travelRepository.save(travel)
   }
@@ -59,5 +64,15 @@ export class TravelService {
     }
 
     return this.travelRepository.remove(travel);
+  }
+
+  private async preloadTravelByCountryPlace(country: string, place: string): Promise<Boolean> {
+    const travel = await this.travelRepository.findOne({ where: { country, place } });
+
+    if (travel) {
+      return false;
+    }
+
+    return true;
   }
 }
