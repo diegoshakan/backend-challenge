@@ -11,6 +11,7 @@
 ## Description
 
 This project makes part of [clubpetro's](https://postos.clubpetro.com/https://postos.clubpetro.com/) challenge. An app to register places to visit around the world with a goal and countries flags to supply any frontend app.
+- Flag URLs can be taken from http://www.geognos.com/, an example: http://www.geognos.com/api/en/countries/flag/BR.png
 
 ## Installation
 
