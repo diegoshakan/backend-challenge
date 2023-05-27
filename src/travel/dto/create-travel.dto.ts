@@ -1,4 +1,4 @@
-import { IsDate, IsString, IsUrl } from "class-validator";
+import { IsDateString, IsString, IsUrl } from "class-validator";
 
 export class CreateTravelDto {
     @IsString()
@@ -7,9 +7,9 @@ export class CreateTravelDto {
     @IsString()
     place: string;
 
-    @IsDate()
+    @IsDateString()
     goal: Date;
 
     @IsUrl()
-    url: string;
+    flag_url: string;
 }

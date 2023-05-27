@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('travels')
 export class Travel {
@@ -14,16 +14,12 @@ export class Travel {
     @Column()
     goal: Date;
 
-    @Column({
-      nullable: true,
-      default: () => 'CURRENT_TIMESTAMP',
-      })
+    @Column()
+    flag_url: string
+
+    @CreateDateColumn()
     createdAt?: Date;
 
-    @Column({
-      nullable: true,
-      default: () => 'CURRENT_TIMESTAMP',
-      onUpdate: 'CURRENT_TIMESTAMP',
-    })
+    @UpdateDateColumn()
     updatedAt?: Date;
 }
