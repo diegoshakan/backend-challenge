@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  db:
+    image: postgres:latest
+    volumes:
+      - ./create_second_db.sh:/docker-entrypoint-initdb.d/create_second_db.sh
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=base_project
+    ports:
+      - 5438:5432
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
