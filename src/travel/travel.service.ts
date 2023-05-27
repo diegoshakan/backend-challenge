@@ -20,7 +20,11 @@ export class TravelService {
   }
 
   findAll() {
-    return this.travelRepository.find();
+    return this.travelRepository.find({
+      order: {
+        goal: "ASC",
+      }
+    });
   }
 
   async findOne(id: number) {
